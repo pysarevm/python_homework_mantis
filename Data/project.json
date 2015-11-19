@@ -1,0 +1,10 @@
+[
+  {
+    "py/object": "model.project.Project",
+    "name": "Testname",
+    "status": "release",
+    "view_status": "private",
+    "description": "Add project test description"
+    "id": null
+  }
+]
