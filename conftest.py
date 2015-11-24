@@ -33,6 +33,7 @@ def app(request):
             web_config = json.load(f)
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=web_config["baseUrl"])
+    fixture.session.ensure_login(username="administrator", password="root")
     return fixture
 
 

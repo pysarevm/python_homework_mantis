@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__author__ = 'Pysarev'
+import time
 
 
 class SessionHelper:
@@ -29,7 +29,7 @@ class SessionHelper:
 
     def is_logged_in(self):
         wd = self.app.wd
-        return len(wd.find_elements_by_link_text("Вийти")) > 0
+        return len(wd.find_elements_by_css_selector("td.login-info-left span")) > 0
 
     def is_logged_in_as(self, username):
         wd = self.app.wd
@@ -39,10 +39,10 @@ class SessionHelper:
         wd = self.app.wd
         return wd.find_element_by_css_selector("td.login-info-left span").text
 
-
     def ensure_login(self, username, password):
         wd = self.app.wd
         if self.is_logged_in():
+            print("is logged in")
             if self.is_logged_in_as(username):
                 return
             else:

@@ -1,5 +1,6 @@
 from model.project import Project
 from selenium.webdriver.support.ui import Select
+import time
 # -*- coding: utf-8 -*-
 
 
@@ -31,7 +32,7 @@ class ProjectHelper:
                 description =  element.find_elements_by_tag_name("td")[4].text
                 self.project_cache.append(Project(name=name, id=id, status=status, enabled=enabled,
                                           view_state=view_state, description=description))
-                print("Project 1: ", self.project_cache[0])
+                #print("Project 1: ", self.project_cache[0])
         return list(self.project_cache)
 
     def create(self, project):
@@ -56,3 +57,22 @@ class ProjectHelper:
             wd.find_element_by_name(field_name).click()
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(field_data)
+
+    def navigate_edit_project_page_by_name(self, projectname):
+        wd = self.app.wd
+        self.navigate_manage_projects_page()
+        elements = wd.find_elements_by_xpath("/html/body/table[3]/tbody/tr")[2:]
+        print("222")
+        for element in elements:
+            a = element.find_element_by_tag_name("a")
+            if a.text == projectname:
+                b = a
+                print("projectname=", projectname)
+        b.click()
+
+    def delete_project_by_name(self, name):
+        wd = self.app.wd
+        self.navigate_edit_project_page_by_name(name)
+        wd.find_element_by_css_selector("input[value='Delete Project']").click()
+        wd.find_element_by_css_selector("input[value='Delete Project']").click()
+        self.project_cache = None
